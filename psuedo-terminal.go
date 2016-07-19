@@ -13,7 +13,7 @@ func main() {
 		panic(err)
 	}
 	defer term.ReleaseFromStdInOut() // defer this
-	fmt.Println("Welcome to DQL")
+	fmt.Println("\nWelcome to DQL Client V0.1.0 (Alpha)\n\nTo quit, type 'exit'\n")
 	term.SetPrompt("dql> ")
 
 	line := ""
