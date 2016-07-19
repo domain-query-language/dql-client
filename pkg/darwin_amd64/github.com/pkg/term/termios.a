@@ -1,225 +1,0 @@
-!<arch>
-__.PKGDEF       0           0     0     644     15029     `
-go object darwin amd64 go1.6.2 X:none
-build id "e5ba19ee06f8ba8ce451982787c6db1d3b7c4d45"
-
-$$
-package termios
-	import syscall "syscall"
-	import errors "errors"
-	import fmt "fmt"
-	import os "os"
-	import time "time"
-	type @"os".dirInfo struct { @"os".buf []byte; @"os".nbuf int; @"os".bufp int }
-	type @"os".file struct { @"os".fd int; @"os".name string; @"os".dirinfo *@"os".dirInfo }
-	func (@"os".fileÂ·2 *@"os".file) @"os".close () (? error)
-	type @"os".FileMode uint32
-	func (@"os".mÂ·2 @"os".FileMode) IsDir () (? bool) { return @"os".mÂ·2 & @"os".FileMode(0x80000000) != @"os".FileMode(0x0) }
-	func (@"os".mÂ·2 @"os".FileMode) IsRegular () (? bool) { return @"os".mÂ·2 & @"os".FileMode(0x8f000000) == @"os".FileMode(0x0) }
-	func (@"os".mÂ·2 @"os".FileMode) Perm () (? @"os".FileMode) { return @"os".mÂ·2 & @"os".FileMode(0x1ff) }
-	func (@"os".mÂ·2 @"os".FileMode) String () (? string)
-	type @"time".zone struct { @"time".name string; @"time".offset int; @"time".isDST bool }
-	type @"time".zoneTrans struct { @"time".when int64; @"time".index uint8; @"time".isstd bool; @"time".isutc bool }
-	type @"time".Location struct { @"time".name string; @"time".zone []@"time".zone; @"time".tx []@"time".zoneTrans; @"time".cacheStart int64; @"time".cacheEnd int64; @"time".cacheZone *@"time".zone }
-	func (@"time".lÂ·2 *@"time".Location "esc:0x22") String () (? string)
-	func (@"time".lÂ·2 *@"time".Location "esc:0x1") @"time".firstZoneUsed () (? bool)
-	func (@"time".lÂ·2 *@"time".Location "esc:0x12") @"time".get () (? *@"time".Location)
-	func (@"time".lÂ·6 *@"time".Location "esc:0x32") @"time".lookup (@"time".secÂ·7 int64) (@"time".nameÂ·1 string, @"time".offsetÂ·2 int, @"time".isDSTÂ·3 bool, @"time".startÂ·4 int64, @"time".endÂ·5 int64)
-	func (@"time".lÂ·2 *@"time".Location "esc:0x1") @"time".lookupFirstZone () (? int)
-	func (@"time".lÂ·4 *@"time".Location "esc:0x1") @"time".lookupName (@"time".nameÂ·5 string "esc:0x1", @"time".unixÂ·6 int64) (@"time".offsetÂ·1 int, @"time".isDSTÂ·2 bool, @"time".okÂ·3 bool)
-	type @"time".Duration int64
-	func (@"time".dÂ·2 @"time".Duration) Hours () (? float64) { var @"time".hourÂ·3 @"time".Duration; ; @"time".hourÂ·3 = @"time".dÂ·2 / @"time".Duration(0x34630b8a000); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0x34630b8a000); return float64(@"time".hourÂ·3) + float64(@"time".nsecÂ·4) * float64(8190022623310637111963488201822504381538623676021880892417778544696899264837610290203272971060556344039023584360473938041055625214280336402169897364226048p-553) }
-	func (@"time".dÂ·2 @"time".Duration) Minutes () (? float64) { var @"time".minÂ·3 @"time".Duration; ; @"time".minÂ·3 = @"time".dÂ·2 / @"time".Duration(0xdf8475800); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0xdf8475800); return float64(@"time".minÂ·3) + float64(@"time".nsecÂ·4) * float64(7678146209353722106395056769533233877065564876941352542109479049699919628723768656821910653339403201031675627614471533358284117434246264392176261853609984p-547) }
-	func (@"time".dÂ·2 @"time".Duration) Nanoseconds () (? int64) { return int64(@"time".dÂ·2) }
-	func (@"time".dÂ·2 @"time".Duration) Seconds () (? float64) { var @"time".secÂ·3 @"time".Duration; ; @"time".secÂ·3 = @"time".dÂ·2 / @"time".Duration(0x3b9aca00); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0x3b9aca00); return float64(@"time".secÂ·3) + float64(@"time".nsecÂ·4) * float64(7198262071269114660816079141112770740375861891461678802759824945047098083990024106014198994535558872472104883612039846078596891298747423852523262413111296p-541) }
-	func (@"time".dÂ·2 @"time".Duration) String () (? string)
-	type @"time".Month int
-	func (@"time".mÂ·2 @"time".Month) String () (? string) { return @"time".months[@"time".mÂ·2 - @"time".Month(0x1)] }
-	type @"time".Weekday int
-	func (@"time".dÂ·2 @"time".Weekday) String () (? string) { return @"time".days[@"time".dÂ·2] }
-	type @"time".Time struct { @"time".sec int64; @"time".nsec int32; @"time".loc *@"time".Location }
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") Add (@"time".dÂ·3 @"time".Duration) (? @"time".Time) { @"time".tÂ·2.@"time".sec += int64(@"time".dÂ·3 / @"time".Duration(0x3b9aca00)); var @"time".nsecÂ·4 int32; ; @"time".nsecÂ·4 = int32(@"time".tÂ·2.@"time".nsec) + int32(@"time".dÂ·3 % @"time".Duration(0x3b9aca00)); if @"time".nsecÂ·4 >= int32(0x3b9aca00) { @"time".tÂ·2.@"time".sec++; @"time".nsecÂ·4 -= int32(0x3b9aca00) } else { if @"time".nsecÂ·4 < int32(0x0) { @"time".tÂ·2.@"time".sec--; @"time".nsecÂ·4 += int32(0x3b9aca00) } }; @"time".tÂ·2.@"time".nsec = @"time".nsecÂ·4; return @"time".tÂ·2 }
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") AddDate (@"time".yearsÂ·3 int, @"time".monthsÂ·4 int, @"time".daysÂ·5 int) (? @"time".Time)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") After (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec > @"time".uÂ·3.@"time".sec || @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec > @"time".uÂ·3.@"time".nsec }
-	func (@"time".tÂ·2 @"time".Time "esc:0x9") AppendFormat (@"time".bÂ·3 []byte "esc:0x1a", @"time".layoutÂ·4 string "esc:0x9") (? []byte)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Before (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec < @"time".uÂ·3.@"time".sec || @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec < @"time".uÂ·3.@"time".nsec }
-	func (@"time".tÂ·4 @"time".Time "esc:0x1") Clock () (@"time".hourÂ·1 int, @"time".minÂ·2 int, @"time".secÂ·3 int)
-	func (@"time".tÂ·4 @"time".Time "esc:0x1") Date () (@"time".yearÂ·1 int, @"time".monthÂ·2 @"time".Month, @"time".dayÂ·3 int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Day () (? int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Equal (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec == @"time".uÂ·3.@"time".nsec }
-	func (@"time".tÂ·2 @"time".Time "esc:0x9") Format (@"time".layoutÂ·3 string "esc:0x9") (? string)
-	func (@"time".tÂ·2 *@"time".Time "esc:0x1") GobDecode (@"time".dataÂ·3 []byte "esc:0x1") (? error)
-	func (@"time".tÂ·3 @"time".Time "esc:0x1") GobEncode () (? []byte, ? error)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Hour () (? int)
-	func (@"time".tÂ·3 @"time".Time "esc:0x1") ISOWeek () (@"time".yearÂ·1 int, @"time".weekÂ·2 int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") In (@"time".locÂ·3 *@"time".Location "esc:0x12") (? @"time".Time)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") IsZero () (? bool) { return @"time".tÂ·2.@"time".sec == int64(0x0) && @"time".tÂ·2.@"time".nsec == int32(0x0) }
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") Local () (? @"time".Time) { @"time".tÂ·2.@"time".loc = @"time".Local; return @"time".tÂ·2 }
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") Location () (? *@"time".Location) { var @"time".lÂ·3 *@"time".Location; ; @"time".lÂ·3 = @"time".tÂ·2.@"time".loc; if @"time".lÂ·3 == nil { @"time".lÂ·3 = @"time".UTC }; return @"time".lÂ·3 }
-	func (@"time".tÂ·3 @"time".Time "esc:0x1") MarshalBinary () (? []byte, ? error)
-	func (@"time".tÂ·3 @"time".Time "esc:0x9") MarshalJSON () (? []byte, ? error)
-	func (@"time".tÂ·3 @"time".Time "esc:0x9") MarshalText () (? []byte, ? error)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Minute () (? int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Month () (? @"time".Month)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Nanosecond () (? int) { return int(@"time".tÂ·2.@"time".nsec) }
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") Round (@"time".dÂ·3 @"time".Duration) (? @"time".Time)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Second () (? int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x9") String () (? string)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Sub (@"time".uÂ·3 @"time".Time "esc:0x1") (? @"time".Duration)
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") Truncate (@"time".dÂ·3 @"time".Duration) (? @"time".Time)
-	func (@"time".tÂ·2 @"time".Time "esc:0x12") UTC () (? @"time".Time) { @"time".tÂ·2.@"time".loc = @"time".UTC; return @"time".tÂ·2 }
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Unix () (? int64) { return @"time".tÂ·2.@"time".sec + int64(-0xe7791f700) }
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") UnixNano () (? int64) { return (@"time".tÂ·2.@"time".sec + int64(-0xe7791f700)) * int64(0x3b9aca00) + int64(@"time".tÂ·2.@"time".nsec) }
-	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalBinary (@"time".dataÂ·3 []byte "esc:0x1") (? error)
-	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalJSON (@"time".dataÂ·3 []byte "esc:0x1") (@"time".errÂ·1 error)
-	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalText (@"time".dataÂ·3 []byte "esc:0x1") (@"time".errÂ·1 error)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Weekday () (? @"time".Weekday)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") Year () (? int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") YearDay () (? int)
-	func (@"time".tÂ·3 @"time".Time "esc:0x32") Zone () (@"time".nameÂ·1 string, @"time".offsetÂ·2 int)
-	func (@"time".tÂ·2 @"time".Time "esc:0x1") @"time".abs () (? uint64)
-	func (@"time".tÂ·5 @"time".Time "esc:0x1") @"time".date (@"time".fullÂ·6 bool) (@"time".yearÂ·1 int, @"time".monthÂ·2 @"time".Month, @"time".dayÂ·3 int, @"time".ydayÂ·4 int)
-	func (@"time".tÂ·4 @"time".Time "esc:0x32") @"time".locabs () (@"time".nameÂ·1 string, @"time".offsetÂ·2 int, @"time".absÂ·3 uint64)
-	type @"os".FileInfo interface { IsDir() (? bool); ModTime() (? @"time".Time); Mode() (? @"os".FileMode); Name() (? string); Size() (? int64); Sys() (? interface {}) }
-	type @"os".File struct { @"os".? *@"os".file }
-	func (@"os".fÂ·2 *@"os".File "esc:0x22") Chdir () (? error)
-	func (@"os".fÂ·2 *@"os".File "esc:0x22") Chmod (@"os".modeÂ·3 @"os".FileMode) (? error)
-	func (@"os".fÂ·2 *@"os".File "esc:0x22") Chown (@"os".uidÂ·3 int, @"os".gidÂ·4 int) (? error)
-	func (@"os".fÂ·2 *@"os".File "esc:0x9") Close () (? error)
-	func (@"os".fÂ·2 *@"os".File "esc:0x1") Fd () (? uintptr) { if @"os".fÂ·2 == nil { return uintptr(0xffffffffffffffff) }; return uintptr(@"os".fÂ·2.@"os".file.@"os".fd) }
-	func (@"os".fÂ·2 *@"os".File "esc:0x32") Name () (? string) { return @"os".fÂ·2.@"os".file.@"os".name }
-	func (@"os".fÂ·3 *@"os".File "esc:0x102") Read (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x102") ReadAt (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") Readdir (@"os".nÂ·4 int) (@"os".fiÂ·1 []@"os".FileInfo, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") Readdirnames (@"os".nÂ·4 int) (@"os".namesÂ·1 []string, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x102") Seek (@"os".offsetÂ·4 int64, @"os".whenceÂ·5 int) (@"os".retÂ·1 int64, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x10a") Stat () (? @"os".FileInfo, ? error)
-	func (@"os".fÂ·2 *@"os".File "esc:0x1") Sync () (? error)
-	func (@"os".fÂ·2 *@"os".File "esc:0x22") Truncate (@"os".sizeÂ·3 int64) (? error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x102") Write (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x102") WriteAt (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x102") WriteString (@"os".sÂ·4 string "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".pread (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".pwrite (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".read (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".readdir (@"os".nÂ·4 int) (@"os".fiÂ·1 []@"os".FileInfo, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".readdirnames (@"os".nÂ·4 int) (@"os".namesÂ·1 []string, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".seek (@"os".offsetÂ·4 int64, @"os".whenceÂ·5 int) (@"os".retÂ·1 int64, @"os".errÂ·2 error)
-	func (@"os".fÂ·3 *@"os".File "esc:0x1") @"os".write (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
-	func @"".Pty () (? *@"os".File, ? *@"os".File, ? error)
-	func @"".Ptsname (@"".fdÂ·3 uintptr) (? string, ? error)
-	func @"".Tiocmget (@"".fdÂ·2 uintptr, @"".statusÂ·3 *int "esc:0x1") (? error)
-	func @"".Tiocmset (@"".fdÂ·2 uintptr, @"".statusÂ·3 *int "esc:0x1") (? error)
-	func @"".Tiocmbis (@"".fdÂ·2 uintptr, @"".statusÂ·3 *int "esc:0x1") (? error)
-	func @"".Tiocmbic (@"".fdÂ·2 uintptr, @"".statusÂ·3 *int "esc:0x1") (? error)
-	type @"syscall".Termios struct { Iflag uint64; Oflag uint64; Cflag uint64; Lflag uint64; Cc [20]uint8; Pad_cgo_0 [4]byte; Ispeed uint64; Ospeed uint64 }
-	func @"".Cfmakecbreak (@"".attrÂ·1 *@"syscall".Termios "esc:0x1") { @"".attrÂ·1.Lflag &^= uint64(0x108); @"".attrÂ·1.Cc[int(0x10)] = uint8(0x1); @"".attrÂ·1.Cc[int(0x11)] = uint8(0x0) }
-	func @"".Cfmakeraw (@"".attrÂ·1 *@"syscall".Termios "esc:0x1") { @"".attrÂ·1.Iflag &^= uint64(0x332); @"".attrÂ·1.Oflag &^= uint64(0x1); @"".attrÂ·1.Cflag &^= uint64(0x1300); @"".attrÂ·1.Cflag |= uint64(0x300); @"".attrÂ·1.Lflag &^= uint64(0x588); @"".attrÂ·1.Cc[int(0x10)] = uint8(0x1); @"".attrÂ·1.Cc[int(0x11)] = uint8(0x0) }
-	const @"".FREAD = 0x1
-	const @"".FWRITE = 0x2
-	const @"".IXON = 0x200
-	const @"".IXOFF = 0x400
-	const @"".IXANY = 0x800
-	const @"".CCTS_OFLOW = 0x10000
-	const @"".CRTS_IFLOW = 0x20000
-	const @"".CRTSCTS = 0x30000
-	func @"".Tcgetattr (@"".fdÂ·2 uintptr, @"".argpÂ·3 *@"syscall".Termios "esc:0x1") (? error)
-	func @"".Tcsetattr (@"".fdÂ·2 uintptr, @"".optÂ·3 uintptr, @"".argpÂ·4 *@"syscall".Termios "esc:0x1") (? error)
-	func @"".Tcsendbreak (@"".fdÂ·2 uintptr, @"".durationÂ·3 uintptr) (? error)
-	func @"".Tcdrain (@"".fdÂ·2 uintptr) (? error)
-	func @"".Tcflush (@"".fdÂ·2 uintptr, @"".whichÂ·3 uintptr) (? error)
-	func @"".Cfgetispeed (@"".attrÂ·2 *@"syscall".Termios "esc:0x1") (? uint32) { return uint32(@"".attrÂ·2.Ispeed) }
-	func @"".Cfgetospeed (@"".attrÂ·2 *@"syscall".Termios "esc:0x1") (? uint32) { return uint32(@"".attrÂ·2.Ospeed) }
-	func @"".Tiocinq (@"".fdÂ·2 uintptr, @"".argpÂ·3 *int "esc:0x1") (? error) { *@"".argpÂ·3 = int(0x0); return nil }
-	func @"".Tiocoutq (@"".fdÂ·2 uintptr, @"".argpÂ·3 *int "esc:0x1") (? error)
-	const @"".TCIFLUSH = 0x0
-	const @"".TCOFLUSH = 0x1
-	const @"".TCIOFLUSH = 0x2
-	const @"".TCSANOW = 0x0
-	const @"".TCSADRAIN = 0x1
-	const @"".TCSAFLUSH = 0x2
-	func @"".init ()
-	var @"time".months [12]string
-	var @"time".days [7]string
-	var @"time".Local *@"time".Location
-	var @"time".UTC *@"time".Location
-	const @"syscall".ECHO = 0x8
-	const @"syscall".VMIN = 0x10
-	const @"syscall".VTIME = 0x11
-	const @"syscall".BRKINT = 0x2
-	const @"syscall".OPOST = 0x1
-	const @"syscall".CSIZE = 0x300
-	const @"syscall".CS8 = 0x300
-
-$$
- _go_.o          0           0     0     644     25390     `
-go object darwin amd64 go1.6.2 X:none
-
-!
-  go13ldsyscall.a
-fmt.aos.aerrors.atime.a ş"".ioctl  €  €eH‹%    H;a†Ô   HƒìX1ÛH‰\$xH‰œ$€   HÇ$6   H‹\$`H‰\$H‹\$hH‰\$H‹\$pH‰\$HÇD$     HÇD$(    HÇD$0    è    H‹D$HHƒø t\H‰D$PH    H‰$H    H‰\$H    H‰\$H\$PH‰\$HÇD$     è    H‹\$(H‰\$xH‹\$0H‰œ$€   HƒÄXÃ1ÛH‰\$xH‰œ$€   HƒÄXÃè    éÿÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ
-      Ğ   syscall.Syscall6   ş  $type.syscall.Errno   ”  type.error   ¬  6go.itab.syscall.Errno.error   æ  runtime.convT2I   Ğ  0runtime.morestack_noctxt   P°  
-"".autotmp_0000 $type.syscall.Errno "".~r3 0type.error "".argp  type.uintptr "".request type.uintptr 
-"".fd  type.uintptr  °»¯°¯ € &Q\  g™ TgclocalsÂ·12fc1489b12fcdedb8fc818b7369b5d9 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   œ/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/ioctl.goş ""._IOC_PARM_LEN  @  @H‹\$HÁëHãÿ  H‰\$ÃÌÌÌÌÌÌÌÌÌÌ     "".~r1 type.uintptr "".ioctl  type.uintptr        TgclocalsÂ·23e8278e2b69a3a75fa59b23c49ed6ad TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ª/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/ioctl_darwin.goş"".open_device  €	  €	eH‹%    HD$àH;A†  Hì    1ÛH‰œ$À   H‰œ$È   H‹œ$¨   H‰$H‹œ$°   H‰\$HÇD$ ÇD$¶  è    H‹D$ H‹L$(H‹\$0H‰\$@H‰L$8Hƒù „‘  H‹œ$¨   H‰\$XH‹œ$°   H‰\$`1ÛH‰œ$€   H‰œ$ˆ   H‰œ$   H‰œ$˜   Hœ$€   Hƒû „<  HÇD$p   HÇD$x   H‰\$hH    H‰$H\$XH‰\$HÇD$    è    H‹L$H‹D$ H‹\$hH‰L$HH‰H‰D$P€=     …Â   H‰CH‹\$8H‰$H‹\$@H‰\$è    H‹L$H‹D$H‹\$hHƒÃH‰L$HH‰H‰D$P€=     uiH‰CH    H‰$HÇD$   H‹\$hH‰\$H‹\$pH‰\$H‹\$xH‰\$ è    H‹L$(H‹D$0HÇ„$¸       H‰Œ$À   H‰„$È   HÄ    ÃLCL‰$H‰D$è    ë‡LCL‰$H‰D$è    é+ÿÿÿ‰é½şÿÿH‰„$¸   1ÛH‰œ$À   H‰œ$È   HÄ    Ãè    éÀıÿÿ
-      ¸  syscall.Open   Ö  type.string     runtime.convT2E   Ò (runtime.writeBarrier   ˜  runtime.convI2E   ä (runtime.writeBarrier   €  Bgo.string."unable to open %q: %v"   à  fmt.Errorf   à  .runtime.writebarrierptr   ˆ  .runtime.writebarrierptr   î  0runtime.morestack_noctxt   PÀ  "".autotmp_0008  "type.interface {} "".autotmp_0007 ¯"type.interface {} "".autotmp_0006 ?(type.[2]interface {} "".autotmp_0003 o&type.[]interface {} "".autotmp_0001 type.string "".err Ïtype.error "".~r2 0type.error "".~r1  type.uintptr "".path  type.string  ÀÂ¿ÀS¿ À 1C‘"	
-   [«Ed@= TgclocalsÂ·9f4747e6338c5bdd4db417363b8a0d83 TgclocalsÂ·ec6df898544294985c466a67bdf42577   ˜/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/pty.goş"".Pty   	   	eH‹%    H;a†)  Hƒì`1ÛH‰\$xH‰œ$€   è    H‹$H‹D$H‹L$H‰L$XH‰D$PHƒø t$HÇD$h    HÇD$p    H‰D$xH‰Œ$€   HƒÄ`ÃH‰T$0H‰$è    H‹\$H‰\$@H‹\$H‰\$HH‹D$H‹L$ H‰L$XH‰D$PHƒø t$HÇD$h    HÇD$p    H‰D$xH‰Œ$€   HƒÄ`ÃH‹\$0H‰$è    H‹D$H‹L$H‰L$XH‰D$PHƒø t$HÇD$h    HÇD$p    H‰D$xH‰Œ$€   HƒÄ`ÃH‹\$0H‰$è    H‹D$H‹L$H‰L$XH‰D$PHƒø t$HÇD$h    HÇD$p    H‰D$xH‰Œ$€   HƒÄ`ÃH‹\$@H‰$H‹\$HH‰\$è    H‹\$H‰\$(H‹D$H‹L$ H‰L$XH‰D$PHƒø t$HÇD$h    HÇD$p    H‰D$xH‰Œ$€   HƒÄ`ÃH‹\$0H‰$H    H‰\$HÇD$   è    H‹\$H‰\$8H‹\$(H‰$H‹\$@H‰\$H‹\$HH‰\$è    H‹D$H‹\$8H‰\$hH‰D$p1ÛH‰\$xH‰œ$€   HƒÄ`Ãè    éºıÿÿÌÌÌÌÌÌÌÌÌÌ
-      N  $"".open_pty_master   î  "".Ptsname   ®  "".grantpt   Æ  "".unlockpt   ò  "".open_device   ¢  go.string."ptm"   È  os.NewFile      os.NewFile   ú  0runtime.morestack_noctxt   @À  "".autotmp_0009 Otype.*os.File "".pts otype.uintptr "".sname ?type.string "".err type.error "".ptm _type.uintptr "".~r2  type.error "".~r1 type.*os.File "".~r0  type.*os.File NÀU¿À_¿ÀK¿ÀK¿À_¿Àv¿ Ğ J(&$1$$$1$w1  &°¹A TgclocalsÂ·cc973a3bbfedabc8985f452fd9c2dde6 TgclocalsÂ·6013db99caf2bb60e55bc0c016a4e7e9   ˜/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/pty.goş$"".open_pty_master  à  àeH‹%    H;avLHƒì(1ÛH‰\$8H‰\$@H    H‰$HÇD$	   è    H‹T$H‹L$H‹D$ H‰T$0H‰L$8H‰D$@HƒÄ(Ãè    ëÌÌÌÌÌÌÌÌÌÌÌÌÌÌ
-      D  *go.string."/dev/ptmx"   h  "".open_device   ¸  0runtime.morestack_noctxt   0P  "".~r1 type.error "".~r0  type.uintptr PGO p < 
- 3= TgclocalsÂ·790e5cc5051fc0affc980ade09e929ec TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¦/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/pty_darwin.goş"".Ptsname  à
-  à
-eH‹%    HD$ĞH;A†‡  Hì°   1ÛH‰œ$À   H‰œ$È   1ÛH‰œ$Ğ   H‰œ$Ø   HÇÀSt€@HÁèH%ÿ  H    H‰$H‰D$H‰D$è    H‹L$H‹D$ H‹\$(H‰\$xH‹œ$¸   H‰$HÇD$St€@H‰L$hHƒø H‰D$p†í  H‰L$è    L‹L$hH‹|$xH‹D$H‹L$ H‰L$`H‰D$XHƒø t*1ÛH‰œ$À   H‰œ$È   H‰„$Ğ   H‰Œ$Ø   HÄ°   ÃH‹t$pH‰¼$¨   1ÀH‰´$    L‰Œ$˜   L‰ÉH9ğŒ   ¶)@€ı utH9øwhHÇ$    L‰Œ$€   L‰L$H‰„$ˆ   H‰D$H‰¼$   H‰|$è    H‹\$ H‰œ$À   H‹\$(H‰œ$È   1ÛH‰œ$Ğ   H‰œ$Ø   HÄ°   Ãè    HÿÁHÿÀH9ğŒtÿÿÿH    H‰\$HHÇD$P&   1ÛH‰\$8H‰\$@H    H‰$è    H‹D$H‰D$0H‹l$PH‰hH‹l$H€=     utH‰(H‰D$0H‹    1íH9èt/H‹L$01ÛH‰œ$À   H‰œ$È   H‰„$Ğ   H‰Œ$Ø   HÄ°   ÃH    H‰$H    H‰\$H    H‰\$è    H‹D$ë¢H‰$H‰l$è    H‹D$0éwÿÿÿè    è    éWıÿÿÌÌÌÌÌÌÌ$
-      ®  type.[]uint8   Ô  "runtime.makeslice   â  "".ioctl   Ø  2runtime.slicebytetostring   Ê  $runtime.panicslice   ú  dgo.string."TIOCPTYGNAME string not NUL-terminated"   ¼  .type.errors.errorString   Î  "runtime.newobject   Š (runtime.writeBarrier   ®  Bgo.itab.*errors.errorString.error   ¨	  0type.*errors.errorString   ¾	  type.error   Ö	  Bgo.itab.*errors.errorString.error   ê	   runtime.typ2Itab   ”
-  .runtime.writebarrierptr   ²
-  $runtime.panicindex   À
-  0runtime.morestack_noctxt   Pà  "".autotmp_0024  type.*uint8 "".autotmp_0022 ÿ0type.*errors.errorString "".autotmp_0017  type.uintptr "".autotmp_0015  0type.*errors.errorString "".autotmp_0014 _type.[]uint8 "".autotmp_0013 /type.[]uint8 "".~r0 ïtype.error errors.textÂ·2 Ïtype.string "".err ¯type.error "".n type.[]uint8 "".~r2 0type.error "".~r1 type.string 
-"".fd  type.uintptr <àãßà ßà¬ßàNß ° 4C?L*.t
-Ş " iG»{$ TgclocalsÂ·519e47b5ed6281ac4430343a24051b89 TgclocalsÂ·85de6a2a7c0d721f6f5a0d26eb212142   ¦/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/pty_darwin.goş"".grantpt  À  ÀeH‹%    H;avIHƒì(1ÛH‰\$8H‰\$@H‹\$0H‰$HÇD$Tt  HÇD$    è    H‹L$H‹D$ H‰L$8H‰D$@HƒÄ(Ãè    ë¡Ì
-      v  "".ioctl   ²  0runtime.morestack_noctxt   0P  "".~r1 type.error 
-"".fd  type.uintptr PDO	 ` <9 
- :& TgclocalsÂ·790e5cc5051fc0affc980ade09e929ec TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¦/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/pty_darwin.goş"".unlockpt  À  ÀeH‹%    H;avIHƒì(1ÛH‰\$8H‰\$@H‹\$0H‰$HÇD$Rt  HÇD$    è    H‹L$H‹D$ H‰L$8H‰D$@HƒÄ(Ãè    ë¡Ì
-      v  "".ioctl   ²  0runtime.morestack_noctxt   0P  "".~r1 type.error 
-"".fd  type.uintptr PDO	 ` D9 
- :& TgclocalsÂ·790e5cc5051fc0affc980ade09e929ec TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¦/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/pty_darwin.goş"".Tiocmget  À  ÀeH‹%    H;avJHƒì(1ÛH‰\$@H‰\$HH‹\$0H‰$HÇD$jt@H‹\$8H‰\$è    H‹L$H‹D$ H‰L$@H‰D$HHƒÄ(Ãè    ë 
-      x  "".ioctl   ´  0runtime.morestack_noctxt   @P  "".~r2  type.error "".status type.*int 
-"".fd  type.uintptr PEO ` : 
- ;% TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb    /Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios.goş"".Tiocmset  à  àeH‹%    H;avKHƒì(1ÛH‰\$@H‰\$HH‹\$0H‰$»mt€H‰\$H‹\$8H‰\$è    H‹L$H‹D$ H‰L$@H‰D$HHƒÄ(Ãè    ëŸÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ
-      z  "".ioctl   ¶  0runtime.morestack_noctxt   @P  "".~r2  type.error "".status type.*int 
-"".fd  type.uintptr PFO p "; 
- <4 TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb    /Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios.goş"".Tiocmbis  à  àeH‹%    H;avKHƒì(1ÛH‰\$@H‰\$HH‹\$0H‰$»lt€H‰\$H‹\$8H‰\$è    H‹L$H‹D$ H‰L$@H‰D$HHƒÄ(Ãè    ëŸÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ
-      z  "".ioctl   ¶  0runtime.morestack_noctxt   @P  "".~r2  type.error "".status type.*int 
-"".fd  type.uintptr PFO p ,; 
- <4 TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb    /Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios.goş"".Tiocmbic  à  àeH‹%    H;avKHƒì(1ÛH‰\$@H‰\$HH‹\$0H‰$»kt€H‰\$H‹\$8H‰\$è    H‹L$H‹D$ H‰L$@H‰D$HHƒÄ(Ãè    ëŸÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌ
-      z  "".ioctl   ¶  0runtime.morestack_noctxt   @P  "".~r2  type.error "".status type.*int 
-"".fd  type.uintptr PFO p 6; 
- <4 TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb    /Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios.goş"".Cfmakecbreak  @  @H‹D$H‹HHÇÅ÷şÿÿH!ÍH‰hÆ@0Æ@1 Ã    "".attr  *type.*syscall.Termios     @  TgclocalsÂ·87d20ce1b58390b294df80b886db78bf TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb    /Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios.goş"".Cfmakeraw  à  àH‹D$H‹HÇÅÍüÿÿH!ÍH‰(H‹HHÇÅşÿÿÿH!ÍH‰hH‹HHÇÅÿìÿÿH!ÍH‰hH‹hHÍ   H‰hH‹HHÇÅwúÿÿH!ÍH‰hÆ@0Æ@1 ÃÌÌÌÌÌÌÌÌÌÌÌÌÌ    
-"".autotmp_0037  type.uint64 "".autotmp_0036  type.uint64 "".autotmp_0035  type.uint64 "".autotmp_0034  type.uint64 "".attr  *type.*syscall.Termios p p &N  TgclocalsÂ·87d20ce1b58390b294df80b886db78bf TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb    /Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios.goş"".Tcgetattr  À  ÀeH‹%    H;avJHƒì(1ÛH‰\$@H‰\$HH‹\$0H‰$HÇD$tH@H‹\$8H‰\$è    H‹L$H‹D$ H‰L$@H‰D$HHƒÄ(Ãè    ë 
-      x  "".ioctl   ´  0runtime.morestack_noctxt   @P  "".~r2  type.error "".argp *type.*syscall.Termios 
-"".fd  type.uintptr PEO ` 2: 
- ;% TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Tcsetattr  à  àeH‹%    H;a†Ò   Hƒì@1ÛH‰\$`H‰\$hH‹D$PHƒø u@¸tH€H‹\$HH‰$H‰D$PH‰D$H‹\$XH‰\$è    H‹L$H‹D$ H‰L$`H‰D$hHƒÄ@ÃHƒøu¸tH€ë¸Hƒøu¸tH€ë«HÇD$8   H    H‰$H    H‰\$H    H‰\$H\$8H‰\$HÇD$     è    H‹\$(H‰\$`H‹\$0H‰\$hHƒÄ@Ãè    éÿÿÿÌ
-      ¢  "".ioctl   ¨  $type.syscall.Errno   ¾  type.error   Ö  6go.itab.syscall.Errno.error     runtime.convT2I   Ì  0runtime.morestack_noctxt   P€  
-"".autotmp_0039 $type.syscall.Errno "".~r3 0type.error "".argp  *type.*syscall.Termios "".opt type.uintptr 
-"".fd  type.uintptr €V€v ğ 6<#;	]  P  TgclocalsÂ·b946ef4133f129e66f92afdb1b76ca6b TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Tcsendbreak  €  €eH‹%    H;a†Ÿ   Hƒì81ÛH‰\$PH‰\$XH‹\$@H‰$HÇD${t  HÇD$    è    H‹D$H‹L$ H‰L$0H‰D$(Hƒø tH‰D$PH‰L$XHƒÄ8ÃHÇ$    è    H‹\$@H‰$HÇD$zt  HÇD$    è    H‹L$H‹D$ H‰L$PH‰D$XHƒÄ8Ãè    éDÿÿÿÌÌÌÌ
-
-      ~  "".ioctl   ê  time.Sleep   ª  "".ioctl   æ  0runtime.morestack_noctxt   @p  "".err type.error "".~r2  type.error "".duration type.uintptr 
-"".fd  type.uintptr pTopEo À ^#:9	  >‚ TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440 TgclocalsÂ·23e8278e2b69a3a75fa59b23c49ed6ad   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Tcdrain  À  ÀeH‹%    H;avIHƒì(1ÛH‰\$8H‰\$@H‹\$0H‰$HÇD$^t  HÇD$    è    H‹L$H‹D$ H‰L$8H‰D$@HƒÄ(Ãè    ë¡Ì
-      v  "".ioctl   ²  0runtime.morestack_noctxt   0P  "".~r1 type.error 
-"".fd  type.uintptr PDO	 ` p9 
- :& TgclocalsÂ·790e5cc5051fc0affc980ade09e929ec TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Tcflush      eH‹%    H;a†ç   HƒìH1ÛH‰\$`H‰\$hHÇD$8    H‹D$XHƒøuDHÇD$8   H‹\$PH‰$»t€H‰\$H\$8H‰\$è    H‹L$H‹D$ H‰L$`H‰D$hHƒÄHÃHƒøuHÇD$8   ë´HƒøuHÇD$8   ë£HÇD$@   H    H‰$H    H‰\$H    H‰\$H\$@H‰\$HÇD$     è    H‹\$(H‰\$`H‹\$0H‰\$hHƒÄHÃè    éüşÿÿÌÌÌÌÌÌÌÌÌÌÌÌ
-      ¼  "".ioctl   Ò  $type.syscall.Errno   è  type.error   €  6go.itab.syscall.Errno.error   º  runtime.convT2I   ö  0runtime.morestack_noctxt   @  
-"".autotmp_0044 $type.syscall.Errno "".com type.int "".~r2  type.error "".which type.uintptr 
-"".fd  type.uintptr c~  :z#		;			]  ]³ TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Cfgetispeed      H‹l$H‹]8‰Û‰\$Ã     "".~r1 type.uint32 "".attr  *type.*syscall.Termios   š  TgclocalsÂ·3f5c1f818fa7055d0400cecd34057162 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Cfgetospeed      H‹l$H‹]@‰Û‰\$Ã     "".~r1 type.uint32 "".attr  *type.*syscall.Termios      TgclocalsÂ·3f5c1f818fa7055d0400cecd34057162 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Tiocinq  @  @1ÛH‹\$HÇ    1ÛH‰\$H‰\$ ÃÌÌÌÌÌ @   "".~r2  type.error "".argp type.*int 
-"".fd  type.uintptr     ¦  TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".Tiocoutq  À  ÀeH‹%    H;avJHƒì(1ÛH‰\$@H‰\$HH‹\$0H‰$HÇD$st@H‹\$8H‰\$è    H‹L$H‹D$ H‰L$@H‰D$HHƒÄ(Ãè    ë 
-      x  "".ioctl   ´  0runtime.morestack_noctxt   @P  "".~r2  type.error "".argp type.*int 
-"".fd  type.uintptr PEO ` ²: 
- ;% TgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¨/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_bsd.goş"".init  À  ÀeH‹%    H;avC¶    €û t¶    €ûuÃè    Æ    è    è    è    è    Æ    Ãè    ë§ÌÌÌÌÌÌÌ
-      $  "".initdoneÂ·   <  "".initdoneÂ·   R  "runtime.throwinit   b "".initdoneÂ·   n  syscall.init   x  fmt.init   ‚  os.init   Œ  time.init   ˜ "".initdoneÂ·   ¦  0runtime.morestack_noctxt        ` ` ` 
- (8 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ¬/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/termios_const.goş4type..hash.[2]interface {}     eH‹%    H;avpHƒì(H‹L$81ÀHÇD$   H‹l$H9è}DH‰D$ H‹\$0Hƒû t>H‰ÅHÁåHëH‰$H‰L$8H‰L$è    H‹L$H‹D$ HÿÀH‹l$H9è|¼H‰L$@HƒÄ(Ã‰ë¾è    éwÿÿÿÌÌÌÌÌÌÌ
-      ¬  (runtime.nilinterhash   €  0runtime.morestack_noctxt   0P  
-"".autotmp_0049 type.int "".autotmp_0048 type.int "".~r2  type.uintptr "".h type.uintptr "".p  *type.*[2]interface {} PgOPO   
- U; TgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   ˜/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/doc.goş0type..eq.[2]interface {} à  àeH‹%    H;a†Î   HƒìX1ÀHÇD$(   H‹l$(H9è’   H‰D$0H‹\$hHƒû „–   H‰ÅHÁåHëH‹H‹sH‹\$`Hƒû tvH‰ÅHÁåHëH‹H‹SH9ÈuVH‰D$8H‰$H‰T$@H‰T$H‰L$HH‰L$H‰t$PH‰t$è    ¶\$ €û t H‹D$0HÿÀH‹l$(H9èŒnÿÿÿÆD$pHƒÄXÃÆD$p HƒÄXÃ‰ë†‰écÿÿÿè    éÿÿÿÌÌÌÌÌ
-      ¼  runtime.efaceeq   Ä  0runtime.morestack_noctxt   0°  "".autotmp_0053 ?"type.interface {} "".autotmp_0052 "type.interface {} "".autotmp_0051 _type.int "".autotmp_0050 Otype.int "".~r2  type.bool "".q *type.*[2]interface {} "".p  *type.*[2]interface {} ,°´¯°	¯°¯ ğ ğ  S TgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440   ˜/Users/barryosullivan/Code/dql-client/src/github.com/pkg/term/termios/doc.goş>6go.itab.syscall.Errno.error     şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·12fc1489b12fcdedb8fc818b7369b5d9              şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·23e8278e2b69a3a75fa59b23c49ed6ad              şJgo.string.hdr."unable to open %q: %v"                       Bgo.string."unable to open %q: %v"   şBgo.string."unable to open %q: %v" 0  ,unable to open %q: %v  şTgclocalsÂ·ec6df898544294985c466a67bdf42577 0  0          S  P     şTgclocalsÂ·9f4747e6338c5bdd4db417363b8a0d83 0  0                   ş&go.string.hdr."ptm"                       go.string."ptm"   şgo.string."ptm"   ptm  şTgclocalsÂ·6013db99caf2bb60e55bc0c016a4e7e9 (  (                 şTgclocalsÂ·cc973a3bbfedabc8985f452fd9c2dde6 (  (                   ş2go.string.hdr."/dev/ptmx"             	          *go.string."/dev/ptmx"   ş*go.string."/dev/ptmx"    /dev/ptmx  şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·790e5cc5051fc0affc980ade09e929ec              ş>Bgo.itab.*errors.errorString.error     şlgo.string.hdr."TIOCPTYGNAME string not NUL-terminated"             &          dgo.string."TIOCPTYGNAME string not NUL-terminated"   şdgo.string."TIOCPTYGNAME string not NUL-terminated" P  NTIOCPTYGNAME string not NUL-terminated  şTgclocalsÂ·85de6a2a7c0d721f6f5a0d26eb212142 0  0          €          şTgclocalsÂ·519e47b5ed6281ac4430343a24051b89 0  0                       şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·790e5cc5051fc0affc980ade09e929ec              şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·790e5cc5051fc0affc980ade09e929ec              şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·87d20ce1b58390b294df80b886db78bf             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·87d20ce1b58390b294df80b886db78bf             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·b946ef4133f129e66f92afdb1b76ca6b             şTgclocalsÂ·23e8278e2b69a3a75fa59b23c49ed6ad              şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·790e5cc5051fc0affc980ade09e929ec              şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·3f5c1f818fa7055d0400cecd34057162             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·3f5c1f818fa7055d0400cecd34057162             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·a06410d538b0ca06f7003ea01fa2bd89             şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           ş>"".initdoneÂ·  type.uint8   ş"".ioctlÂ·f              "".ioctl   ş&""._IOC_PARM_LENÂ·f               ""._IOC_PARM_LEN   ş""".open_deviceÂ·f              "".open_device   ş"".PtyÂ·f              "".Pty   ş*"".open_pty_masterÂ·f              $"".open_pty_master   ş"".PtsnameÂ·f              "".Ptsname   ş"".grantptÂ·f              "".grantpt   ş"".unlockptÂ·f              "".unlockpt   ş"".TiocmgetÂ·f              "".Tiocmget   ş"".TiocmsetÂ·f              "".Tiocmset   ş"".TiocmbisÂ·f              "".Tiocmbis   ş"".TiocmbicÂ·f              "".Tiocmbic   ş$"".CfmakecbreakÂ·f              "".Cfmakecbreak   ş"".CfmakerawÂ·f              "".Cfmakeraw   ş"".TcgetattrÂ·f              "".Tcgetattr   ş"".TcsetattrÂ·f              "".Tcsetattr   ş""".TcsendbreakÂ·f              "".Tcsendbreak   ş"".TcdrainÂ·f              "".Tcdrain   ş"".TcflushÂ·f              "".Tcflush   ş""".CfgetispeedÂ·f              "".Cfgetispeed   ş""".CfgetospeedÂ·f              "".Cfgetospeed   ş"".TiocinqÂ·f              "".Tiocinq   ş"".TiocoutqÂ·f              "".Tiocoutq   ş"".initÂ·f              "".init   ş"runtime.gcbits.03    ş8go.string.hdr."interface {}"                       0go.string."interface {}"   ş0go.string."interface {}"    interface {}  ş"type.interface {} °  °              çW                                                                  
-0€  runtime.algarray   @  "runtime.gcbits.03   P  8go.string.hdr."interface {}"   p  4go.weak.type.*interface {}   €° "type.interface {}   ş"runtime.gcbits.01    ş<go.string.hdr."[]interface {}"                       4go.string."[]interface {}"   ş4go.string."[]interface {}"    []interface {}  ş&type.[]interface {}                 p“ê/                                                 
-0   runtime.algarray   @  "runtime.gcbits.01   P  <go.string.hdr."[]interface {}"   p  8go.weak.type.*[]interface {}   €  "type.interface {}   şRgo.typelink.[]interface {}	[]interface {}              &type.[]interface {}   şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2             şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a             ş<type..hashfunc.[2]interface {}              4type..hash.[2]interface {}   ş8type..eqfunc.[2]interface {}              0type..eq.[2]interface {}   ş2type..alg.[2]interface {}                        <type..hashfunc.[2]interface {}     8type..eqfunc.[2]interface {}   ş"runtime.gcbits.0f    ş>go.string.hdr."[2]interface {}"                       6go.string."[2]interface {}"   ş6go.string."[2]interface {}"     [2]interface {}  ş(type.[2]interface {} °  °                ,Y¤ñ                                                                0  2type..alg.[2]interface {}   @  "runtime.gcbits.0f   P  >go.string.hdr."[2]interface {}"   p  :go.weak.type.*[2]interface {}   €  "type.interface {}     &type.[]interface {}   şVgo.typelink.[2]interface {}	[2]interface {}              (type.[2]interface {}   ş@go.string.hdr."*[2]interface {}"                       8go.string."*[2]interface {}"   ş8go.string."*[2]interface {}" 0  "*[2]interface {}  ş*type.*[2]interface {}                 ¾s-q 6                                                
-0   runtime.algarray   @  "runtime.gcbits.01   P  @go.string.hdr."*[2]interface {}"   p  <go.weak.type.**[2]interface {}   €  (type.[2]interface {}   ş.go.string.hdr."[]uint8"                       &go.string."[]uint8"   ş&go.string."[]uint8"   []uint8  ştype.[]uint8                 ß~.8                                                 
-0   runtime.algarray   @  "runtime.gcbits.01   P  .go.string.hdr."[]uint8"   p  *go.weak.type.*[]uint8   €  type.uint8   ş6go.typelink.[]uint8	[]uint8              type.[]uint8   ş.go.string.hdr."syscall"                       &go.string."syscall"   ş&go.string."syscall"   syscall  ş,go.importpath.syscall.                       &go.string."syscall"   ş,go.string.hdr."errors"                       $go.string."errors"   ş$go.string."errors"   errors  ş*go.importpath.errors.                       $go.string."errors"   ş&go.string.hdr."fmt"                       go.string."fmt"   şgo.string."fmt"   fmt  ş$go.importpath.fmt.                       go.string."fmt"   ş$go.string.hdr."os"                       go.string."os"   şgo.string."os"   os  ş"go.importpath.os.                       go.string."os"   ş(go.string.hdr."time"                        go.string."time"   ş go.string."time"   
-time  ş&go.importpath.time.                        go.string."time"   ş:type..hash.[2]interface {}Â·f              4type..hash.[2]interface {}   ş6type..eq.[2]interface {}Â·f              0type..eq.[2]interface {}   ÿÿgo13ld
