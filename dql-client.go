@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"github.com/carmark/pseudo-terminal-go/terminal"
 	"io"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -66,6 +69,17 @@ func runCommands(commands []string) {
 	if len(commands) == 0 {
 		return
 	}
-	fmt.Print(len(commands))
-	fmt.Println(" commands run\n")
+	for _, command := range commands {
+		response := sendCommand(command)
+		fmt.Println(response + "\n")
+	}
+}
+
+func sendCommand(command string) string {
+	serverUrl := "http://dql-server.app/"
+	resp, _ := http.PostForm(
+		serverUrl+"api/command",
+		url.Values{"statement": {command}})
+	body, _ := ioutil.ReadAll(resp.Body)
+	return string(body)
 }
