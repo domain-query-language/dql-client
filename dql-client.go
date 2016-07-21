@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/carmark/pseudo-terminal-go/terminal"
 	"io"
@@ -76,9 +77,13 @@ func runCommands(commands []string) {
 }
 
 func sendCommand(command string) string {
-	serverUrl := "http://dql-server.app/"
+
+	var serverUrl string
+	flag.StringVar(&serverUrl, "h", "localhost", "specify a server to connect to.  defaults to 'localhost'.")
+	flag.Parse()
+
 	resp, _ := http.PostForm(
-		serverUrl+"api/command",
+		serverUrl+"/api/command",
 		url.Values{"statement": {command}})
 	body, _ := ioutil.ReadAll(resp.Body)
 	return string(body)
