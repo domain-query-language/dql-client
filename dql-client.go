@@ -77,8 +77,12 @@ func runCommands(commands []string) {
 		return
 	}
 	for _, command := range commands {
-		response, _ := sendCommand(command + ";")
-		fmt.Println(response + "\n")
+		response, err := sendCommand(command + ";")
+		if !err {
+			fmt.Println("Command successful. Last command identifier '" + response + "'\n")
+		} else {
+			fmt.Println(response + "\n")
+		}
 	}
 }
 
