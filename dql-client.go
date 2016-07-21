@@ -11,11 +11,17 @@ import (
 	"strings"
 )
 
+var serverUrl string
+
 func main() {
 	term, err := terminal.NewWithStdInOut()
 	if err != nil {
 		panic(err)
 	}
+
+	flag.StringVar(&serverUrl, "h", "localhost", "specify a server to connect to.  defaults to 'localhost'.")
+	flag.Parse()
+
 	defer term.ReleaseFromStdInOut() // defer this
 	fmt.Println("\nWelcome to DQL Client V0.1.0 (Alpha)\n\nTo quit, type 'exit'\n")
 	term.SetPrompt("dql> ")
@@ -71,20 +77,22 @@ func runCommands(commands []string) {
 		return
 	}
 	for _, command := range commands {
-		response := sendCommand(command)
+		response, err := sendCommand(command)
+		if err {
+			fmt.Print("Error: ")
+		}
 		fmt.Println(response + "\n")
 	}
 }
 
-func sendCommand(command string) string {
-
-	var serverUrl string
-	flag.StringVar(&serverUrl, "h", "localhost", "specify a server to connect to.  defaults to 'localhost'.")
-	flag.Parse()
+func sendCommand(command string) (string, bool) {
 
 	resp, _ := http.PostForm(
 		serverUrl+"/api/command",
 		url.Values{"statement": {command}})
-	body, _ := ioutil.ReadAll(resp.Body)
-	return string(body)
+	defer resp.Body.Close()
+
+	message, _ := ioutil.ReadAll(resp.Body)
+	err := resp.StatusCode != 200
+	return string(message), err
 }
