@@ -7,11 +7,14 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
 	"strings"
 )
 
 var serverUrl string
+var jar, _ = cookiejar.New(nil)
+var client = &http.Client{Jar: jar}
 
 func main() {
 	term, err := terminal.NewWithStdInOut()
@@ -77,18 +80,13 @@ func runCommands(commands []string) {
 		return
 	}
 	for _, command := range commands {
-		response, err := sendCommand(command + ";")
-		if !err {
-			fmt.Println("Command successful. Last command identifier '" + response + "'\n")
-		} else {
-			fmt.Println(response + "\n")
-		}
+		response, _ := sendCommand(command + ";")
+		fmt.Println(response + "\n")
 	}
 }
 
 func sendCommand(command string) (string, bool) {
-
-	resp, _ := http.PostForm(
+	resp, _ := client.PostForm(
 		serverUrl+"/api/command",
 		url.Values{"statement": {command}})
 	defer resp.Body.Close()
